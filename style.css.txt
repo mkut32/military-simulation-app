@@ -1,0 +1,116 @@
+:root {
+    --bg-color: #1b2219;
+    --panel-color: #242e21;
+    --text-color: #dcedc8;
+    --accent-color: #7cb342;
+    --danger-color: #c62828;
+    --border-color: #33691e;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Courier New', Courier, monospace;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+header {
+    text-align: center;
+    border-bottom: 3px double var(--border-color);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+h1 { margin: 0; color: var(--accent-color); }
+
+.resources-bar {
+    display: flex;
+    justify-content: space-around;
+    background: var(--panel-color);
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.grid-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+@media (max-width: 768px) {
+    .grid-layout { grid-template-columns: 1fr; }
+}
+
+.panel {
+    background: var(--panel-color);
+    border: 1px solid var(--border-color);
+    padding: 20px;
+    border-radius: 4px;
+}
+
+h2 {
+    border-bottom: 1px dashed var(--border-color);
+    padding-bottom: 5px;
+    margin-top: 0;
+    color: var(--accent-color);
+}
+
+.unit-control, .mission-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0,0,0,0.2);
+    padding: 10px;
+    margin-bottom: 10px;
+    border-left: 4px solid var(--accent-color);
+}
+
+.mission-card { border-left-color: var(--danger-color); }
+
+button {
+    background: var(--accent-color);
+    color: #000;
+    border: none;
+    padding: 10px 15px;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+button:hover { opacity: 0.9; }
+
+.btn-secondary {
+    background: #555;
+    color: #fff;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.btn-danger {
+    background: var(--danger-color);
+    color: white;
+}
+
+.logs-section { margin-top: 20px; }
+
+.logs-container {
+    background: #000;
+    padding: 15px;
+    height: 150px;
+    overflow-y: auto;
+    border: 1px solid #333;
+    font-size: 14px;
+}
+
+.success { color: #66bb6a; }
+.fail { color: #ef5350; }
+.system-msg { color: #888; }

@@ -1,0 +1,87 @@
+// Estado do Jogo
+let resources = { gold: 1000, supplies: 500, power: 0 };
+let army = { infantry: 0, tanks: 0, jets: 0 };
+
+const config = {
+    infantry: { gold: 50, supplies: 20, power: 10 },
+    tanks: { gold: 150, supplies: 60, power: 35 },
+    jets: { gold: 400, supplies: 150, power: 100 }
+};
+
+function updateUI() {
+    document.getElementById('res-gold').innerText = resources.gold;
+    document.getElementById('res-supplies').innerText = resources.supplies;
+    document.getElementById('res-power').innerText = resources.power;
+    
+    document.getElementById('count-infantry').innerText = army.infantry;
+    document.getElementById('count-tanks').innerText = army.tanks;
+    document.getElementById('count-jets').innerText = army.jets;
+}
+
+function logMessage(text, type = 'system-msg') {
+    const logsContainer = document.getElementById('combat-logs');
+    const time = new Date().toLocaleTimeString();
+    const p = document.createElement('p');
+    p.className = type;
+    p.innerText = `[${time}] ${text}`;
+    logsContainer.prepend(p);
+}
+
+function generateResources() {
+    resources.gold += 150;
+    resources.supplies += 80;
+    logMessage("Suprimentos e impostos coletados: +150 Ouro, +80 Suprimentos.");
+    updateUI();
+}
+
+function recruit(unitType) {
+    const cost = config[unitType];
+    if (resources.gold >= cost.gold && resources.supplies >= cost.supplies) {
+        resources.gold -= cost.gold;
+        resources.supplies -= cost.supplies;
+        army[unitType]++;
+        resources.power += cost.power;
+        
+        logMessage(`Nova unidade recrutada: ${unitType.toUpperCase()}. Poder total aumentado!`);
+        updateUI();
+    } else {
+        logMessage("⚠️ Recursos insuficientes para realizar este recrutamento!", "fail");
+    }
+}
+
+function startMission(enemyDef, rewardGold, missionName, rewardSupplies = 0) {
+    if (resources.power === 0) {
+        logMessage("❌ Impossível atacar! Seu exército não possui poder de ataque.", "fail");
+        return;
+    }
+
+    logMessage(`Enviando tropas para a ${missionName}...`);
+    
+    setTimeout(() => {
+        // Cálculo de Chance: Seu Poder vs Defesa Inimiga + Fator Aleatório (Sorte)
+        const luckFactor = Math.floor(Math.random() * 50); 
+        const totalCalculatedPower = resources.power + luckFactor;
+
+        if (totalCalculatedPower >= enemyDef) {
+            resources.gold += rewardGold;
+            resources.supplies += rewardSupplies;
+            logMessage(`⚔️ VITÓRIA na ${missionName}! Inimigo subjugado. Espólios: +💰${rewardGold} | +📦${rewardSupplies}`, "success");
+        } else {
+            // Penalidade por derrota: Perda de metade do exército
+            army.infantry = Math.floor(army.infantry / 2);
+            army.tanks = Math.floor(army.tanks / 2);
+            army.jets = Math.floor(army.jets / 2);
+            
+            // Recalcula o poder total restante
+            resources.power = (army.infantry * config.infantry.power) + 
+                              (army.tanks * config.tanks.power) + 
+                              (army.jets * config.jets.power);
+                              
+            logMessage(`💥 DERROTA na ${missionName}! Forças inimigas repeliram seu ataque. Baixas severas sofridas (-50% das tropas).`, "fail");
+        }
+        updateUI();
+    }, 800); // Pequeno delay simulando a operação
+}
+
+// Inicialização
+updateUI();

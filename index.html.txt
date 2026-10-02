@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comando Estratégico - Simulação Militar</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🪖 COMANDO ESTRATÉGICO</h1>
+            <p>Painel de Controle e Simulação de Combate</p>
+        </header>
+
+        <!-- Barra de Recursos -->
+        <section class="resources-bar">
+            <div class="resource-card">💰 Ouro: <span id="res-gold">1000</span></div>
+            <div class="resource-card">📦 Suprimentos: <span id="res-supplies">500</span></div>
+            <div class="resource-card">🎖️ Poder de Ataque: <span id="res-power">0</span></div>
+        </section>
+
+        <div class="grid-layout">
+            <!-- Gerenciamento de Quartel -->
+            <section class="panel">
+                <h2>Recrutamento de Tropas</h2>
+                <div class="unit-control">
+                    <div>
+                        <h3>Infantaria</h3>
+                        <p>Ataque: 10 | Custo: 💰50, 📦20</p>
+                        <p>Qtd: <span id="count-infantry">0</span></p>
+                    </div>
+                    <button onclick="recruit('infantry')">Recrutar</button>
+                </div>
+                <div class="unit-control">
+                    <div>
+                        <h3>Blindados</h3>
+                        <p>Ataque: 35 | Custo: 💰150, 📦60</p>
+                        <p>Qtd: <span id="count-tanks">0</span></p>
+                    </div>
+                    <button onclick="recruit('tanks')">Recrutar</button>
+                </div>
+                <div class="unit-control">
+                    <div>
+                        <h3>Suporte Aéreo</h3>
+                        <p>Ataque: 100 | Custo: 💰400, 📦150</p>
+                        <p>Qtd: <span id="count-jets">0</span></p>
+                    </div>
+                    <button onclick="recruit('jets')">Recrutar</button>
+                </div>
+                <button class="btn-secondary" onclick="generateResources()">📦 Coletar Recursos (+Ouro/+Suprimentos)</button>
+            </section>
+
+            <!-- Missões de Combate -->
+            <section class="panel">
+                <h2>Operações Militares</h2>
+                <div class="mission-card">
+                    <h3>Operação Tempestade (Fácil)</h3>
+                    <p>Defesa Inimiga: 50 | Recompensa: 💰200</p>
+                    <button class="btn-danger" onclick="startMission(50, 200, 'Operação Tempestade')">Iniciar Ataque</button>
+                </div>
+                <div class="mission-card">
+                    <h3>Invasão de Fortaleza (Média)</h3>
+                    <p>Defesa Inimiga: 200 | Recompensa: 💰600, 📦200</p>
+                    <button class="btn-danger" onclick="startMission(200, 600, 'Invasão de Fortaleza', 200)">Iniciar Ataque</button>
+                </div>
+                <div class="mission-card">
+                    <h3>Queda do Ditador (Difícil)</h3>
+                    <p>Defesa Inimiga: 600 | Recompensa: 💰1500, 📦500</p>
+                    <button class="btn-danger" onclick="startMission(600, 1500, 'Queda do Ditador', 500)">Iniciar Ataque</button>
+                </div>
+            </section>
+        </div>
+
+        <!-- Relatórios de Inteligência -->
+        <section class="panel logs-section">
+            <h2>Relatórios de Campo (Intel)</h2>
+            <div id="combat-logs" class="logs-container">
+                <p class="system-msg">[SISTEMA] Aguardando ordens do comandante...</p>
+            </div>
+        </section>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+
